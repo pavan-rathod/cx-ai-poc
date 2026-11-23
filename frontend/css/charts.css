@@ -1,0 +1,456 @@
+/* Chart.js custom styling */ 
+
+canvas {
+    max-height: 400px;
+}
+
+/* Tooltip Styling */
+.chartjs-tooltip {
+    opacity: 1;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 3px;
+    -webkit-transition: all .1s ease;
+    transition: all .1s ease;
+    pointer-events: none;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* Custom Chart Colors */
+:root {
+    --chart-blue: #2563eb;
+    --chart-green: #10b981;
+    --chart-purple: #8b5cf6;
+    --chart-orange: #f59e0b;
+    --chart-red: #ef4444;
+}
+
+/* Distribution Chart Styling */
+#distributionChart {
+    display: block;
+    height: 300px !important;
+}
+
+/* Rating Chart Styling */
+#ratingChart {
+    display: block;
+    height: 300px !important;
+}
+
+.chart-container {
+    min-height: 360px;
+    position: relative;
+}
+
+#ratingChart {
+    display: block;
+    width: 100% !important;
+    height: 300px !important;
+}
+
+#distributionChart, #sentimentChart {
+    display: block;
+    width: 100% !important;
+    height: 300px !important;
+}
+
+#trendChart {
+    display: block;
+    width: 100% !important;
+    height: 320px !important;
+}
+
+/* Trend Chart */
+.full-width {
+    grid-column: span 3;
+}
+
+.insights-box {
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Chart controls */
+.chart-controls {
+    margin-bottom: 10px;
+}
+
+.chart-controls select {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.chart-container {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.chart-container h3 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #0f172a;
+}
+
+/* Recent Data List Styling */
+.data-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.data-item {
+    padding: 1rem;
+    background: var(--bg-alt);
+    border-left: 4px solid var(--primary);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.data-item.csv {
+    border-left-color: var(--chart-blue);
+}
+
+.data-item.trustpilot {
+    border-left-color: var(--chart-green);
+}
+
+.data-item.scraping {
+    border-left-color: var(--chart-purple);
+}
+
+.data-item-source {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.data-item-content {
+    font-size: 0.9rem;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Loading States */
+.loading {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+/* Sentiment styling */
+.sentiment-positive {
+    border-left: 5px solid #10b981;
+    height: 75%;
+}
+
+.sentiment-neutral {
+    border-left: 5px solid #f59e0b;
+    height: 75%;
+}
+
+.sentiment-negative {
+    border-left: 5px solid #ef4444;
+    height: 75%;
+}
+
+.suggestion-summary, .issue-summary {
+    margin-top: 1rem;
+}
+
+.suggestion-item {
+    background: #f8fafc;
+    border-left: 4px solid #6366f1;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}
+
+.suggestion-count {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: 0.25rem;
+}
+
+.suggestion-text {
+    color: #334155;
+    line-height: 1.4;
+    width: 100%;
+}
+
+.issue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.issue-name {
+    font-weight: 600;
+    color: #334155;
+}
+
+.issue-count {
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: var(--bg);
+    } 
+    100% {
+        background-color: var(--bg-alt);
+    }
+}
+
+/* Spinner */
+.spinner {
+    border: 3px solid var(--bg-alt);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin is linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Chart Container Responsive */
+@media (max-width: 1024px) {
+    canvas {
+        max-height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    canvas {
+        max-height: 300px;
+    }
+    .charts-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .nav-tabs,
+    .footer,
+    .upload-box,
+    .scrape-form,
+    .filters {
+        display: none;
+    }
+
+    .chart-container {
+        page-break-inside: avoid;
+    }
+}
+
+/* ====================
+All Aggregated Data UI  
+======================= */
+
+.data-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.data-table th {
+    background: #f1f5f9;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+
+.data-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.source-cell {
+    white-space: nowrap;
+}
+
+.source-badge {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    color: #ffffff;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03rem;
+}
+
+.data-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.data-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 0.65rem;
+}
+
+.data-card-header strong {
+    color: #0f172a;
+    font-size: 0.98rem;
+}
+
+.data-subtitle {
+    color: #64748b;
+    font-size: 0.82rem;
+    margin-top: 0.2rem;
+}
+
+.review-text {
+    color: #334155;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0.6rem 0;
+}
+
+.rating-pill {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.data-meta-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+}
+
+.sentiment-badge {
+    display: inline-block;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03rem;
+}
+
+.sentiment-positive {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.sentiment-neutral {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.sentiment-negative {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.sentiment-unknown, .sentiment-n\/a {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.suggestion-box {
+    margin-top: 0.75rem;
+    background: #f8fafc;
+    border-left: 4px solid #6366f1;
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: #334155;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
+.timestamp-cell {
+    color: #64748b;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.json-preview {
+    white-space: pre-wrap;
+    font-size: 0.8rem;
+    color: #334155;
+    background: #f8fafc;
+    padding: 0.75rem;
+    border-radius: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+/* Mobile table behavior */
+@media (max-width: 768px) {
+    .data-table {
+        min-width: 760px;
+    }
+
+    .data-card-header {
+        flex-direction: column;
+    }
+
+    .timestamp-cell {
+        white-space: normal;
+    }
+    
+}

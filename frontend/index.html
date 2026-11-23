@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/charts.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Customer Sentiment Insights &amp; Proactive Repair</h1>
+                <p class="subtitle">Leveraging Sentiment Intelligence to Enable Proactive Issue Resolution</p>
+            </div>
+
+            <div class="header-actions">
+                <button id="refreshBtn" class="btn btn-primary">🔁 Manual Refresh</button>
+
+                <div class="status-indicator">
+                    <span id="statusDot" class="status-dot loading"></span>
+                    <span id="statusText">Initializing...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- NAVIGATION -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
+            <button class="nav-tab" data-tab="csv">CSV</button>
+            <button class="nav-tab" data-tab="trustpilot">Mock Reviews</button>
+            <button class="nav-tab" data-tab="scraping">Web Scraping</button>
+            <button class="nav-tab" data-tab="data">Individual Reviews</button>
+            <button class="nav-tab" data-tab="workflows">Proactive Monitoring &amp; Repair</button>
+        </nav>
+
+        <!-- MAIN -->
+        <main class="main-content">
+
+            <!-- ========================== DASHBOARD ========================== -->
+            <div id="dashboard" class="tab-content active">
+
+                <!-- SUMMARY CARDS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>CSV</h3>
+                        <p id="csvCount" class="stat-number">0</p>
+                        <p id="csvRows" class="stat-label">0 rows</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Mock Reviews</h3>
+                        <p id="trustpilotCount" class="stat-number">0</p>
+                        <p id="trustpilotRating" class="stat-label">⭐️ 0.0</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Scraped Results</h3>
+                        <p id="scrapingCount" class="stat-number">0</p>
+                        <p id="scrapingUrls" class="stat-label">0 URLs</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Total Data</h3>
+                        <p id="totalData" class="stat-number">0</p>
+                        <p class="stat-label">All sources</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Workflows</h3>
+                        <p id="workflowDashboardCount" class="stat-number">0</p>
+                        <p class="stat-label">Auto-triggered</p>
+                    </div>
+                </div>
+
+                <!-- INSIGHTS + SENTIMENT -->
+                <div class="insights-sentiment-grid">
+
+                    <!-- LEFT -->
+                    <div class="insights-panel">
+                        <h3>Review Insights &amp; Suggestions</h3>
+
+                        <div id="insightsBox">
+                            <p class="empty-state">Loading insights...</p>
+                        </div>
+
+                        <h4>Top Suggestions</h4>
+                        <div id="suggestionsList"></div>
+
+                        <h4>Issue Categories</h4>
+                        <div id="issueList"></div>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="sentiment-panel">
+                        <div class="stat-card sentiment-positive">
+                            <h3>Positive</h3>
+                            <p id="positiveCount" class="stat-number">0</p>
+                            <p>Happy Customers</p>
+                            <div class="emoji">😀</div>
+                        </div>
+
+                        <div class="stat-card sentiment-neutral">
+                            <h3>Neutral</h3>
+                            <p id="neutralCount" class="stat-number">0</p>
+                            <p>Average Feedback</p>
+                            <div class="emoji">😐</div>
+                        </div>
+
+                        <div class="stat-card sentiment-negative">
+                            <h3>Negative</h3>
+                            <p id="negativeCount" class="stat-number">0</p>
+                            <p>Needs Attention</p>
+                            <div class="emoji">☹️</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="charts-grid">
+
+                    <div class="chart-container">
+                        <h3>Data Distribution by Source</h3>
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Rating Distribution</h3>
+                        <canvas id="ratingChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Sentiment Distribution</h3>
+                        <canvas id="sentimentChart"></canvas>
+                    </div>
+
+                    <div class="chart-container full-width">
+                        <h3>Data Trends Over Time</h3>
+
+                        <div class="chart-controls">
+                            <select id="timeFilter">
+                                <option value="all">All Time</option>
+                                <option value="7">7 Days</option>
+                                <option value="30">30 Days</option>
+                            </select>
+                        </div>
+
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================ CSV ============================ -->
+            <div id="csv" class="tab-content">
+                <div class="content-section">
+                    <h2>Upload CSV</h2>
+
+                    <div class="upload-box">
+                        <h3>Upload CSV File</h3>
+                        <div class="upload-area" id="uploadArea">
+                            <h4>Drag and drop your CSV file here</h4>
+
+                            <input type="file" id="csvInput" accept=".csv,.xlsx,.xls" hidden>
+
+                            <button class="btn btn-secondary" onclick="document.getElementById('csvInput').click()">
+                                Browse Files
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="file-list">
+                        <h3>Uploaded Files</h3>
+                        <div id="fileList" class="list-container">
+                            <p class="empty-state">No files uploaded yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================== MOCK REVIEWS ======================== -->
+            <div id="trustpilot" class="tab-content">
+                <div class="content-section">
+                    <h2>Mock Reviews</h2>
+
+                    <!-- Filters -->
+                    <div class="filters">
+                        <input type="text" id="trustpilotSearch" placeholder="Search reviews..." class="search-input">
+                        <select id="ratingFilter" class="select-input">
+                            <option value="">All Ratings</option>
+                            <option value="5">⭐️⭐️⭐️⭐️⭐️ 5 Stars</option>
+                            <option value="4">⭐️⭐️⭐️⭐️ 4 Stars</option>
+                            <option value="3">⭐️⭐️⭐️ 3 Stars</option>
+                            <option value="2">⭐️⭐️ 2 Stars</option>
+                            <option value="1">⭐️ 1 Star</option>
+                        </select>
+                    </div>
+
+                    <!-- Reviews List -->
+                    <div id="trustpilotList" class="reviews-list">
+                        <p class="empty-state">Loading reviews...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================== SCRAPING ========================== -->
+            <div id="scraping" class="tab-content">
+                <div class="content-section">
+                    <h2>Web Scraping</h2>
+
+                    <!-- Scrape Form -->
+                    <div class="scrape-form">
+                        <h3>Scrape a URL</h3>
+                        <div class="form-group">
+                            <label for="scrapeUrl">URL:</label>
+                            <input type="url" id="scrapeUrl" placeholder="https://example.com" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scrapeSelector">CSS Selector (optional):</label>
+                            <input type="text" id="scrapeSelector" placeholder=".metric-value" class="form-input">
+                        </div>
+                        <button id="scrapeBtn" class="btn btn-primary">Scrape URL</button>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="scrape-results">
+                        <h3>Scraping Results</h3>
+                        <div id="scrapingList" class="results-list">
+                            <p class="empty-state">No scraping results yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== INDIVIDUAL REVIEWS ===================== -->
+            <div id="data" class="tab-content">
+                <div class="content-section">
+                    <h2>All Aggregated Data</h2>
+
+                    <!-- Filters -->
+                    <div class="filters">
+                        <input type="text" id="dataSearch" placeholder="Search all data..." class="search-input">
+                        <select id="sourceFilter" class="select-input">
+                            <option value="">All Sources</option>
+                            <option value="csv">CSV</option>
+                            <option value="trustpilot">Mock Reviews</option>
+                            <option value="scraping">Web Scraping</option>
+                        </select>
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="data-table-wrapper">
+                        <table id="dataTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 130px;">Source</th>
+                                    <th>Review Details</th>
+                                    <th style="width: 190px;">Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <tr>
+                                    <td colspan="3" class="empty-state">Loading data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================== WORKFLOWS ========================== -->
+            <div id="workflows" class="tab-content">
+                <div class="content-section">
+                    <h2>Workflow Triggers</h2>
+
+                    <div class="workflow-summary-grid">
+                        <div class="stat-card workflow-card">
+                            <h3>Total Workflows</h3>
+                            <p id="workflowTotal" class="stat-number">0</p>
+                            <p class="stat-label">Triggered sessions</p>
+                        </div>
+
+                        <div class="stat-card workflow-card">
+                            <h3>Triggered</h3>
+                            <p id="workflowTriggered" class="stat-number">0</p>
+                            <p class="stat-label">Active mock workflows</p>
+                        </div>
+
+                        <div class="stat-card workflow-card">
+                            <h3>Primary Issue</h3>
+                            <p id="workflowTopIssue" class="stat-number workflow-issue-text">-</p>
+                            <p class="stat-label">Detected issue type</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-panel">
+                        <h3>Workflow History</h3>
+                        <div id="workflowHistoryList" class="workflow-list">
+                            <p class="empty-state">No workflows triggered yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>Delivering Reliability Through Smart Insights | Powered by Flask REST APIs</p>
+        </footer>
+    </div>
+
+    <!-- SCRIPTS: Chart.js first, then our files in dependency order -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api-client.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

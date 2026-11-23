@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cx-ai-poc
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: gunicorn --chdir backend --bind 0.0.0.0:$PORT --workers 1 --threads 4 app:app
+    healthCheckPath: /api/health
+    envVars:
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: ENABLE_WEB_SCRAPING
+        value: "false"
